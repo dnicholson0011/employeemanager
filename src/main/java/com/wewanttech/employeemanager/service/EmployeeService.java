@@ -1,5 +1,6 @@
 package com.wewanttech.employeemanager.service;
 
+import com.wewanttech.employeemanager.exception.UserNotFoundException;
 import com.wewanttech.employeemanager.model.Employee;
 import com.wewanttech.employeemanager.repo.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,17 @@ public class EmployeeService {
 
     public List<Employee> findAllEmployees() {
         return employeeRepo.findAll();
+    }
+
+    public Employee updateEmployee(Employee employee) {
+        return employeeRepo.save(employee);
+    }
+
+    public Employee findEmployeeById(Long id) {
+        return employeeRepo.findEmployeeById(id).orElseThrow(() -> new UserNotFoundException("User by id " + id + " was not found"));
+    }
+
+    public void deleteEmployee(Long id) {
+        employeeRepo.deleteEmployeeById(id);
     }
 }
